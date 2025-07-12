@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Upload Stats</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+</head>
+<body>
+    <div class="admin-container">
+        <h1>📊 User Upload Statistics</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Total Uploads</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user['username'] }}</td>
+                    <td>{{ user['total_uploads'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a class="back-btn" href="{{ url_for('dashboard') }}">← Back to Dashboard</a>
+    </div>
+</body>
+</html>

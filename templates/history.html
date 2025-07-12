@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scan History - LPR</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='history.css') }}">
+</head>
+<body class="history-page">
+  <nav class="navbar">
+    <div class="nav-brand">LPR Web</div>
+    <div class="nav-links">
+      <a href="{{ url_for('index') }}">Home</a>
+      <a href="{{ url_for('dashboard') }}">Dashboard</a>
+      <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1 class="title">Scan History</h1>
+
+    {% if records %}
+    <table class="history-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Image</th>
+          <th>Plate Text</th>
+          <th>Timestamp</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in records %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td><img src="{{ url_for('static', filename='uploads/' ~ row.image_path) }}" width="100"></td>
+          <td>{{ row.plate_text }}</td>
+          <td>{{ row.timestamp }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p>No scans yet.</p>
+    {% endif %}
+  </div>
+</body>
+</html>
