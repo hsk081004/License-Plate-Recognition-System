@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='result.css') }}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
 </head>
+
 <body class="result-page">
     <nav class="navbar">
         <div class="nav-brand">LPR Web</div>
@@ -24,31 +26,31 @@
         <div class="image-group">
             <div>
                 <h3>Original Image</h3>
-                <img src="{{ url_for('static', filename=original_image) }}" class="img-display" alt="Original image">
+                <img src="{{ url_for('static', filename=image_path) }}" class="img-display" alt="Original image">
             </div>
 
             <div>
                 <h3>Cropped Plate(s)</h3>
-                {% if cropped_image and cropped_image|length > 0 %}
-                    {% for img in cropped_image %}
-                        <img src="{{ url_for('static', filename=img) }}" class="img-display" alt="Cropped plate">
-                    {% endfor %}
+                {% if results and results|length > 0 %}
+                {% for result in results %}
+                <img src="{{ url_for('static', filename=result.image) }}" class="img-display" alt="Cropped plate">
+                {% endfor %}
                 {% else %}
-                    <p>No plate detected.</p>
+                <p>No plate detected.</p>
                 {% endif %}
             </div>
         </div>
 
         <div class="text-output">
             <h2>Detected Text:</h2>
-            {% if plate %}
-                <ul class="plate-list">
-                    {% for p in plate.split(' | ') %}
-                        <li class="plate-text">{{ p }}</li>
-                    {% endfor %}
-                </ul>
+            {% if results and results|length > 0 %}
+            <ul class="plate-list">
+                {% for result in results %}
+                <li class="plate-text">{{ result.text }}</li>
+                {% endfor %}
+            </ul>
             {% else %}
-                <p class="plate-text">No text detected.</p>
+            <p class="plate-text">No text detected.</p>
             {% endif %}
         </div>
 
@@ -62,4 +64,5 @@
         gsap.from(".result-card", { opacity: 0, scale: 0.95, duration: 1.2, ease: "power2.out", delay: 0.3 });
     </script>
 </body>
+
 </html>
